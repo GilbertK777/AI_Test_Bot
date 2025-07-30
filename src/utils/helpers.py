@@ -24,8 +24,8 @@ logging.basicConfig(
 def tg(msg: str) -> None:
     """텔레그램 메시지 전송 (예외 발생 시 로그만)"""
     try:
-        Updater(CFG.TG_TOKEN).bot.send_message(chat_id=CFG.TG_CHAT, text=msg)
-        logging.info(f"Telegram ▶ {msg}")
+        # Updater(CFG.TG_TOKEN).bot.send_message(chat_id=CFG.TG_CHAT, text=msg)
+        logging.info(f"Telegram (disabled) ▶ {msg}")
     except Exception as e:
         logging.error(f"Telegram 오류: {e}")
 

@@ -11,22 +11,36 @@ from src.order.order_service import OrderService
 from src.bot.trading_bot import TradingBot
 from src.ui.dashboard import run_dashboard
 
-def main():
-    # ── 1) 거래소 선택 (ENV: EXCHANGE) ──
+def setup_exchange():
+    """거래소 클라이언트 객체를 생성 및 반환"""
     if CFG.EXCHANGE_NAME == "BYBIT":
         exchange = BybitFutures(CFG.API_KEY, CFG.API_SECRET)
     else:
         exchange = BinanceFutures(CFG.API_KEY, CFG.API_SECRET)
+    return exchange
 
-    # ── 2) 서비스 객체 생성 ──
-    repo  = IndicatorRepository(exchange, CFG.SYMBOL)
+def setup_services(exchange):
+    """데이터, 모델, 주문 서비스 객체를 생성 및 반환"""
+    repo = IndicatorRepository(exchange, CFG.SYMBOL)
     model = ModelService(CFG.MODEL_FP)
     order = OrderService(exchange, paper=CFG.TEST_MODE, init_balance=CFG.INIT_BAL)
+    return repo, model, order
 
-    # ── 3) 봇 루프 & UI 실행 ──
+def start_bot_and_dashboard(repo, model, order):
+    """봇을 생성하고 루프 및 대시보드를 실행"""
     bot = TradingBot(repo, model, order)
     threading.Thread(target=bot.loop, daemon=True).start()
     run_dashboard(bot)
+
+def main():
+    # ── 1) 거래소 선택 ──
+    exchange = setup_exchange()
+
+    # ── 2) 서비스 객체 생성 ──
+    repo, model, order = setup_services(exchange)
+
+    # ── 3) 봇 루프 & UI 실행 ──
+    start_bot_and_dashboard(repo, model, order)
 
 if __name__ == "__main__":
     main()
