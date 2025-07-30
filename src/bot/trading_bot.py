@@ -24,8 +24,10 @@ class TradingBot:
             try:
                 if self.order.is_paused(): time.sleep(CFG.SLEEP_SEC); continue
                 df = self.repo.get_merged()
+                # BUGFIX: .seconds는 시간차의 '초' 부분만 반환 (최대 86400).
+                # 총 시간(초)을 비교하려면 .total_seconds() 사용해야 함.
                 need_train = (self.model.model is None or
-                              (datetime.utcnow()-self.model.t_last_train).seconds >
+                              (datetime.utcnow()-self.model.t_last_train).total_seconds() >
                               CFG.RETRAIN_HR*3600)
                 if need_train: self.model.train(df)
                 df = self.model.add_prob(df)
@@ -41,7 +43,8 @@ class TradingBot:
                         if last["long"]:  self.order.open_position(last["close"], qty, "long")
                         if last["short"]: self.order.open_position(last["close"], qty, "short")
                 else:
-                    self.order.poll_position_closed(last["close"])
+                    self.order.sync_position()  # 포지션 상태 동기화 (Live)
+                    self.order.poll_position_closed(last["close"]) # 포지션 종료 확인 (Paper)
                 time.sleep(CFG.SLEEP_SEC)
             except Exception as e:
                 logging.error(f"루프 오류: {e}"); tg(f"⚠️ 루프 오류: {e}"); time.sleep(30)
