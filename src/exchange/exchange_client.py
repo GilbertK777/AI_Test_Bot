@@ -26,3 +26,11 @@ class ExchangeClient(abc.ABC):
     @abc.abstractmethod
     def fetch_funding_rate(self, symbol: str) -> float:
         ...
+
+    @abc.abstractmethod
+    def get_price_precision(self, symbol: str) -> int:
+        ...
+
+    @abc.abstractmethod
+    def fetch_position(self, symbol: str) -> dict:
+        ...

@@ -24,7 +24,7 @@ class OrderService:
         if not self.pos: return 0.0
         entry, qty, side = self.pos["entry"], self.pos["qty"], self.pos["side"]
         delta = (exit_px - entry) if side=="long" else (entry - exit_px)
-        fee = abs(exit_px * qty) * 0.0006
+        fee = abs(exit_px * qty) * CFG.TRADE_FEE
         funding = abs(entry * qty) * self.ex.fetch_funding_rate(CFG.SYMBOL)
         return delta * qty * CFG.LEVERAGE - fee - funding
 
@@ -35,9 +35,12 @@ class OrderService:
             logging.info(f"[PAPER] TP/SL {tp_px:.2f}/{sl_px:.2f}")
             return
         try:
+            # BUGFIX: 가격을 거래소의 정밀도(precision)에 맞게 변환해야 함
+            tp_px_r = self.ex.client.price_to_precision(CFG.SYMBOL, tp_px)
+            sl_px_r = self.ex.client.price_to_precision(CFG.SYMBOL, sl_px)
             exit_side = "SELL" if side=="long" else "BUY"
-            self.ex.create_exit_order(CFG.SYMBOL, exit_side, qty, round(tp_px,2), tp=True)
-            self.ex.create_exit_order(CFG.SYMBOL, exit_side, qty, round(sl_px,2), tp=False)
+            self.ex.create_exit_order(CFG.SYMBOL, exit_side, qty, tp_px_r, tp=True)
+            self.ex.create_exit_order(CFG.SYMBOL, exit_side, qty, sl_px_r, tp=False)
         except Exception as e:
             logging.error(f"TP/SL attach 실패: {e}"); tg(f"⚠️ TP/SL attach 실패: {e}")
 
@@ -60,24 +63,35 @@ class OrderService:
             self._attach_tp_sl(side, entry_px, qty)
 
     def poll_position_closed(self, px_now):
-        if not self.pos or not self.paper: return
-        entry, qty, side = self.pos["entry"], self.pos["qty"], self.pos["side"]
-        hit_tp = (px_now >= entry*(1+CFG.TP_PCT)) if side=="long" else (px_now <= entry*(1-CFG.TP_PCT))
-        hit_sl = (px_now <= entry*(1-CFG.SL_PCT)) if side=="long" else (px_now >= entry*(1+CFG.SL_PCT))
-        if not (hit_tp or hit_sl): return
-        pnl = self._pnl(px_now); self.balance += pnl
-        self.trades.append({"time": datetime.utcnow(), "side":f"CLOSE_{side.upper()}",
-                            "price":px_now,"bal":self.balance,"pnl":pnl})
-        tg(f"✅ [PAPER] {side.upper()} 종료 @ {px_now:.2f}  PnL={pnl:.2f}")
-        self.loss_cnt = self.loss_cnt+1 if pnl<0 else 0
-        if self.loss_cnt>=CFG.MAX_LOSS:
-            self.pause_until = datetime.utcnow()+timedelta(hours=CFG.PAUSE_HR)
-            tg(f"⛔ 연속 손실 {self.loss_cnt} – {CFG.PAUSE_HR}h 휴식")
-        self.pos=None
+        with self.lock:
+            if not self.pos or not self.paper: return
+            entry, qty, side = self.pos["entry"], self.pos["qty"], self.pos["side"]
+            hit_tp = (px_now >= entry*(1+CFG.TP_PCT)) if side=="long" else (px_now <= entry*(1-CFG.TP_PCT))
+            hit_sl = (px_now <= entry*(1-CFG.SL_PCT)) if side=="long" else (px_now >= entry*(1+CFG.SL_PCT))
+            if not (hit_tp or hit_sl): return
+            pnl = self._pnl(px_now); self.balance += pnl
+            self.trades.append({"time": datetime.utcnow(), "side":f"CLOSE_{side.upper()}",
+                                "price":px_now,"bal":self.balance,"pnl":pnl})
+            tg(f"✅ [PAPER] {side.upper()} 종료 @ {px_now:.2f}  PnL={pnl:.2f}")
+            self.loss_cnt = self.loss_cnt+1 if pnl<0 else 0
+            if self.loss_cnt>=CFG.MAX_LOSS:
+                self.pause_until = datetime.utcnow()+timedelta(hours=CFG.PAUSE_HR)
+                tg(f"⛔ 연속 손실 {self.loss_cnt} – {CFG.PAUSE_HR}h 휴식")
+            self.pos=None
 
     def is_paused(self):
-        if self.pause_until and datetime.utcnow() < self.pause_until:
-            return True
-        if self.pause_until and datetime.utcnow() >= self.pause_until:
-            self.pause_until=None; self.loss_cnt=0; tg("▶️ 트레이딩 재개")
-        return False
+        with self.lock:
+            if self.pause_until and datetime.utcnow() < self.pause_until:
+                return True
+            if self.pause_until and datetime.utcnow() >= self.pause_until:
+                self.pause_until=None; self.loss_cnt=0; tg("▶️ 트레이딩 재개")
+            return False
+
+    def sync_position(self):
+        """(Live 모드) 교차검증: 실제 거래소 포지션과 동기화"""
+        with self.lock:
+            if self.paper or not self.pos: return
+            pos_ex = self.ex.fetch_position(CFG.SYMBOL)
+            if not pos_ex:
+                tg("ℹ️ 포지션 동기화: 거래소에 포지션 없음 → 내부 상태 초기화")
+                self.pos = None

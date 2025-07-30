@@ -47,3 +47,14 @@ class BybitFutures(ExchangeClient):
     def fetch_funding_rate(self, symbol):
         # Bybit 펀딩률 API는 별도; 여기선 0.0
         return 0.0
+
+    def get_price_precision(self, symbol: str) -> int:
+        market = self.client.market(symbol)
+        return int(market["precision"]["price"])
+
+    def fetch_position(self, symbol: str) -> dict:
+        positions = self.client.fetch_positions([symbol])
+        for p in positions:
+            if p.get("symbol") == symbol and p.get("contracts", 0) > 0:
+                return p
+        return {}

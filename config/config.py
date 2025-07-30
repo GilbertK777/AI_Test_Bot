@@ -44,6 +44,7 @@ class CFG:
     SL_PCT   = float(os.getenv("STOP_LOSS_PCT", 0.02))
     TP_PCT   = float(os.getenv("TP_PCT",        0.05))
     SLIP_PCT = float(os.getenv("SLIPPAGE_PCT",  0.0005))
+    TRADE_FEE= float(os.getenv("TRADE_FEE",     0.0006))
 
     # ── 주기 & 로깅 ──
     SLEEP_SEC  = int(os.getenv("SLEEP_SEC", 60))

@@ -23,4 +23,6 @@ class Strategy:
         df["exit_s"] = ((df["prob_up"] > CFG.BUY_TH) |
                         (df["rsi"] < 30) |
                         (df["macd"] > df["macd_sig"]))
+        # NOTE: 일부 진입/청산 조건이 중복 (e.g., long 진입/청산 모두 macd>sig 조건 포함).
+        # 이는 빠른 손절 또는 Whipsaw(잦은 매매)를 유발할 수 있으므로 전략 검토 필요.
         return df
