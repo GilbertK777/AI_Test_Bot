@@ -61,3 +61,6 @@ class BinanceFutures(ExchangeClient):
             if p.get("symbol") == symbol and p.get("contracts", 0) > 0:
                 return p
         return {}
+
+    def cancel_all_orders(self, symbol: str):
+        return self.client.cancel_all_orders(symbol)

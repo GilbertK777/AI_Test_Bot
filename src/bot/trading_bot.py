@@ -42,9 +42,18 @@ class TradingBot:
                         qty = min(qty, CFG.MAX_QTY)
                         if last["long"]:  self.order.open_position(last["close"], qty, "long")
                         if last["short"]: self.order.open_position(last["close"], qty, "short")
-                else:
-                    self.order.sync_position()  # 포지션 상태 동기화 (Live)
-                    self.order.poll_position_closed(last["close"]) # 포지션 종료 확인 (Paper)
+                else: # 포지션 보유 시
+                    # 1. 전략 기반 종료
+                    pos_side = self.order.pos.get('side')
+                    if pos_side == 'long' and last['exit_l']:
+                        self.order.close_position(last['close'])
+                    elif pos_side == 'short' and last['exit_s']:
+                        self.order.close_position(last['close'])
+
+                    # 2. TP/SL 기반 종료 (Paper) 및 동기화 (Live)
+                    if self.order.pos is not None:
+                        self.order.sync_position()
+                        self.order.poll_position_closed(last["close"])
                 time.sleep(CFG.SLEEP_SEC)
             except Exception as e:
                 logging.error(f"루프 오류: {e}"); tg(f"⚠️ 루프 오류: {e}"); time.sleep(30)

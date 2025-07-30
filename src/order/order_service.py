@@ -87,6 +87,40 @@ class OrderService:
                 self.pause_until=None; self.loss_cnt=0; tg("▶️ 트레이딩 재개")
             return False
 
+    def close_position(self, px_now):
+        """전략에 의해 포지션 종료 (Live/Paper)"""
+        with self.lock:
+            if not self.pos: return
+            side, qty = self.pos["side"], self.pos["qty"]
+            exit_px = px_now
+
+            if not self.paper:
+                try:
+                    self.ex.cancel_all_orders(CFG.SYMBOL)
+                    close_side = "sell" if side == "long" else "buy"
+                    order = self.ex.create_market_order(CFG.SYMBOL, close_side, qty)
+                    exit_px = float(order.get("price", px_now))
+                    tg_msg = f"☑️ [LIVE] Strategy Exit: {side.upper()} @ {exit_px:.2f}"
+                except Exception as e:
+                    tg(f"⚠️ 포지션 종료 실패: {e}"); logging.error(f"포지션 종료 실패: {e}")
+                    self.pos = None  # 불일치 가능성 감수하고 초기화
+                    return
+            else:
+                tg_msg = f"☑️ [PAPER] Strategy Exit: {side.upper()} @ {exit_px:.2f}"
+
+            logging.info(tg_msg)
+            pnl = self._pnl(exit_px)
+            self.balance += pnl
+            self.trades.append({"time": datetime.utcnow(), "side":f"CLOSE_{side.upper()}",
+                                "price":exit_px,"bal":self.balance,"pnl":pnl})
+            tg(f"{tg_msg}\n💰 PnL={pnl:.2f} | Bal={self.balance:.2f}")
+
+            self.loss_cnt = self.loss_cnt + 1 if pnl < 0 else 0
+            if self.loss_cnt >= CFG.MAX_LOSS:
+                self.pause_until = datetime.utcnow() + timedelta(hours=CFG.PAUSE_HR)
+                tg(f"⛔ 연속 손실 {self.loss_cnt} – {CFG.PAUSE_HR}h 휴식")
+            self.pos = None
+
     def sync_position(self):
         """(Live 모드) 교차검증: 실제 거래소 포지션과 동기화"""
         with self.lock:

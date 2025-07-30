@@ -34,3 +34,7 @@ class ExchangeClient(abc.ABC):
     @abc.abstractmethod
     def fetch_position(self, symbol: str) -> dict:
         ...
+
+    @abc.abstractmethod
+    def cancel_all_orders(self, symbol: str):
+        ...

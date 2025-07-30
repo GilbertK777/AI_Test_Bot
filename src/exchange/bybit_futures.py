@@ -58,3 +58,7 @@ class BybitFutures(ExchangeClient):
             if p.get("symbol") == symbol and p.get("contracts", 0) > 0:
                 return p
         return {}
+
+    def cancel_all_orders(self, symbol: str):
+        # Bybit 선물에서는 symbol 파라미터 필수
+        return self.client.cancel_all_orders(symbol)
