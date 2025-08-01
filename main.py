@@ -29,7 +29,7 @@ def setup_exchange():
 
     `config.py`에 정의된 `EXCHANGE_NAME` 환경 변수 값에 따라
     'BYBIT'이면 `BybitFutures` 인스턴스를, 그 외의 경우(기본값 'BINANCE')는 `BinanceFutures` 인스턴스를 생성합니다.
-    이렇게 생성된 거래소 객체는 실제 API 연동을 담당하며, 다른 서비스들에게 의존성으로 주입됩니다.
+    이때, 각 거래소에 맞는 API 키와 시크릿을 `CFG`에서 가져와 전달합니다.
 
     Returns:
         ExchangeClient: `BinanceFutures` 또는 `BybitFutures`의 인스턴스.
@@ -38,10 +38,10 @@ def setup_exchange():
     """
     if CFG.EXCHANGE_NAME == "BYBIT":
         # Bybit 거래소 클라이언트 생성
-        exchange = BybitFutures(CFG.API_KEY, CFG.API_SECRET)
+        exchange = BybitFutures(CFG.BYBIT_API_KEY, CFG.BYBIT_API_SECRET)
     else:
         # Binance 거래소 클라이언트 생성 (기본값)
-        exchange = BinanceFutures(CFG.API_KEY, CFG.API_SECRET)
+        exchange = BinanceFutures(CFG.BINANCE_API_KEY, CFG.BINANCE_API_SECRET)
     return exchange
 
 def setup_services(exchange):

@@ -25,23 +25,24 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- 필수 환경 변수 확인 ---
-# 애플리케이션 실행에 반드시 필요한 환경 변수 목록을 정의합니다.
-# 이 목록에 있는 키들이 하나라도 .env 파일이나 시스템 환경 변수에 설정되어 있지 않으면,
-# 프로그램은 시작되지 않고 즉시 종료됩니다. 이는 설정 누락으로 인한 런타임 오류를 사전에 방지합니다.
-REQUIRED_ENV = [
-    "BINANCE_API_KEY",      # 바이낸스 API 키
-    "BINANCE_API_SECRET",   # 바이낸스 API 시크릿
-    "TELEGRAM_BOT_TOKEN",   # 텔레그램 알림을 위한 봇 토큰
-    "TELEGRAM_CHAT_ID"      # 텔레그램 알림을 받을 채팅 ID
-]
-# 리스트 컴프리헨션을 사용하여 `REQUIRED_ENV` 목록의 각 키에 대해 `os.getenv()`를 호출하고,
-# 결과가 None이거나 빈 문자열인 경우 (즉, 설정되지 않은 경우) `_missing` 리스트에 추가합니다.
-_missing = [key for key in REQUIRED_ENV if not os.getenv(key)]
+# 애플리케이션 실행에 반드시 필요한 공통 환경 변수 목록을 정의합니다.
+_common_required = ["TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"]
 
-# 만약 `_missing` 리스트에 항목이 하나라도 있다면 (즉, 필수 환경 변수가 누락되었다면),
+# 선택된 거래소에 따라 필요한 API 키 변수를 동적으로 결정합니다.
+_exchange_name = os.getenv("EXCHANGE", "BINANCE").upper()
+_exchange_keys = []
+if _exchange_name == "BINANCE":
+    _exchange_keys = ["BINANCE_API_KEY", "BINANCE_API_SECRET"]
+elif _exchange_name == "BYBIT":
+    _exchange_keys = ["BYBIT_API_KEY", "BYBIT_API_SECRET"]
+
+# 공통 변수와 거래소별 변수를 합쳐 최종 필수 환경 변수 목록을 만듭니다.
+REQUIRED_ENV = _common_required + _exchange_keys
+
+# 필수 변수가 설정되었는지 확인합니다.
+_missing = [key for key in REQUIRED_ENV if not os.getenv(key)]
 if _missing:
-    # f-string을 사용하여 어떤 변수가 누락되었는지 알려주는 에러 메시지를 출력하고,
-    # `sys.exit()`를 호출하여 프로그램을 종료합니다. 이는 치명적인(FATAL) 오류로 처리됩니다.
+    # 누락된 변수가 있으면 프로그램을 종료합니다.
     sys.exit(f"[FATAL] .env 파일에 다음 필수 변수가 설정되지 않았습니다: {_missing}")
 
 
@@ -53,17 +54,18 @@ class CFG:
     """
 
     # --- API 및 계정 관련 설정 ---
-    # 거래소 API 키. 라이브 트레이딩에 사용됩니다.
-    API_KEY = os.getenv("BINANCE_API_KEY")
-    # 거래소 API 시크릿. 라이브 트레이딩에 사용됩니다.
-    API_SECRET = os.getenv("BINANCE_API_SECRET")
-    # 텔레그램 봇 토큰. 봇의 상태 변경(진입, 청산, 오류 등)을 알리기 위해 사용됩니다.
+    # 거래소별 API 키와 시크릿을 별도로 로드합니다.
+    BINANCE_API_KEY = os.getenv("BINANCE_API_KEY")
+    BINANCE_API_SECRET = os.getenv("BINANCE_API_SECRET")
+    BYBIT_API_KEY = os.getenv("BYBIT_API_KEY")
+    BYBIT_API_SECRET = os.getenv("BYBIT_API_SECRET")
+
+    # 텔레그램 봇 토큰 및 채팅 ID
     TG_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-    # 텔레그램 메시지를 수신할 채팅 ID.
     TG_CHAT = os.getenv("TELEGRAM_CHAT_ID")
+
     # 사용할 거래소 이름. 'BYBIT' 또는 'BINANCE'를 지원합니다.
-    # 환경 변수가 없으면 기본값으로 'BINANCE'를 사용하며, `.upper()`를 통해 대문자로 변환합니다.
-    EXCHANGE_NAME = os.getenv("EXCHANGE", "BINANCE").upper()
+    EXCHANGE_NAME = _exchange_name
 
     # --- 심볼 및 레버리지 설정 ---
     # 거래할 암호화폐 페어(심볼). ccxt 라이브러리 형식(예: 'BTC/USDT')을 따릅니다.
