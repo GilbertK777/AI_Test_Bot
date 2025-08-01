@@ -11,7 +11,8 @@
 """
 import logging
 import sys
-from logging.handlers import RotatingFileHandler, StreamHandler
+from logging import StreamHandler
+from logging.handlers import RotatingFileHandler
 import pandas as pd
 import ta
 from telegram.ext import Updater

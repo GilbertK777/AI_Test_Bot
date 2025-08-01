@@ -70,10 +70,22 @@ class ModelService:
         split = int(len(df) * 0.8)
         X_train_orig, y_train_orig = X[:split], y[:split]
 
-        # SMOTE를 사용하여 학습 데이터의 클래스 불균형을 해소합니다.
-        # 'target'이 0 또는 1로 편중된 경우, 소수 클래스의 샘플을 인위적으로 생성하여 비율을 맞춥니다.
-        # `random_state`를 고정하여 재현성을 보장합니다.
-        X_tr, y_tr = SMOTE(random_state=42).fit_resample(X_train_orig, y_train_orig)
+        # SMOTE를 사용하기 전에, 각 클래스의 샘플 수를 확인합니다.
+        n_samples_class_0 = (y_train_orig == 0).sum()
+        n_samples_class_1 = (y_train_orig == 1).sum()
+        n_minority_samples = min(n_samples_class_0, n_samples_class_1)
+
+        # SMOTE는 최소한 k_neighbors + 1 개의 샘플이 필요합니다.
+        # 소수 클래스의 샘플 수가 너무 적으면 SMOTE를 적용할 수 없으므로, 이 경우엔 그냥 원본 데이터를 사용합니다.
+        if n_minority_samples > 1:
+            # k_neighbors는 소수 클래스의 샘플 수보다 작아야 합니다.
+            # 기본값(5)보다 샘플 수가 적으면, 샘플 수 - 1을 k_neighbors로 설정하여 에러를 방지합니다.
+            k_neighbors = min(5, n_minority_samples - 1)
+            logging.info(f"Applying SMOTE with k_neighbors={k_neighbors}")
+            X_tr, y_tr = SMOTE(random_state=42, k_neighbors=k_neighbors).fit_resample(X_train_orig, y_train_orig)
+        else:
+            logging.warning("Skipping SMOTE due to insufficient samples in the minority class.")
+            X_tr, y_tr = X_train_orig, y_train_orig
 
         # GridSearch를 수행해야 할 조건인지 확인합니다.
         # (1) self.model이 None (즉, 한번도 학습된 적 없음) 이거나,
