@@ -104,3 +104,27 @@
 2025-08-01 01:37:13,186 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
 2025-08-01 01:37:13,186 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
 2025-08-01 01:37:13,187 [INFO] Telegram (disabled) ▶ ⛔ Max consecutive losses reached (3). Pausing trading for 1 hour(s).
+2025-08-01 02:14:54,005 [INFO] Starting model training...
+2025-08-01 02:14:54,006 [INFO] Applying SMOTE with k_neighbors=1
+2025-08-01 02:14:54,067 [INFO] Performing full training with GridSearchCV...
+2025-08-01 02:14:56,350 [INFO] GridSearch finished. Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 120}
+2025-08-01 02:14:56,353 [INFO] Model training complete. Model saved to models/xgb_BTC_USDT_fut.joblib
+2025-08-01 02:14:56,353 [INFO] Telegram (disabled) ▶ 📈 모델 재학습 완료
+2025-08-01 02:14:56,362 [INFO] Telegram (disabled) ▶ 🚀 [LIVE] LONG position opened @ 50025.00
+2025-08-01 02:14:56,363 [INFO] [LIVE] TP/SL orders attached at TP=52526.25, SL=48524.25
+2025-08-01 02:14:56,363 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 02:14:56,363 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 02:14:56,363 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48475.73. PnL=-777.55
+2025-08-01 02:14:56,363 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 02:14:56,363 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 02:14:56,363 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 52578.78. PnL=1273.73
+2025-08-01 02:14:56,398 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 02:14:56,399 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 02:14:56,399 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
+2025-08-01 02:14:56,399 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 02:14:56,399 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 02:14:56,399 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
+2025-08-01 02:14:56,399 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 02:14:56,399 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 02:14:56,399 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
+2025-08-01 02:14:56,399 [INFO] Telegram (disabled) ▶ ⛔ Max consecutive losses reached (3). Pausing trading for 1 hour(s).
