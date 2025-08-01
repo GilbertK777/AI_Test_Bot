@@ -1,0 +1,106 @@
+2025-08-01 01:07:13,792 [INFO] Starting model training...
+2025-08-01 01:08:15,861 [INFO] Starting model training...
+2025-08-01 01:12:37,236 [INFO] Starting model training...
+2025-08-01 01:13:10,770 [INFO] Starting model training...
+2025-08-01 01:13:10,772 [INFO] Applying SMOTE with k_neighbors=1
+2025-08-01 01:13:10,859 [INFO] Performing full training with GridSearchCV...
+2025-08-01 01:13:14,758 [INFO] GridSearch finished. Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 120}
+2025-08-01 01:13:14,776 [INFO] Model training complete. Model saved to models/xgb_BTC_USDT_fut.joblib
+2025-08-01 01:13:14,776 [INFO] Telegram (disabled) ▶ 📈 모델 재학습 완료
+2025-08-01 01:19:40,351 [INFO] Starting model training...
+2025-08-01 01:19:40,353 [INFO] Applying SMOTE with k_neighbors=1
+2025-08-01 01:19:40,416 [INFO] Performing full training with GridSearchCV...
+2025-08-01 01:19:44,170 [INFO] GridSearch finished. Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 120}
+2025-08-01 01:19:44,179 [INFO] Model training complete. Model saved to models/xgb_BTC_USDT_fut.joblib
+2025-08-01 01:19:44,180 [INFO] Telegram (disabled) ▶ 📈 모델 재학습 완료
+2025-08-01 01:20:46,445 [INFO] Starting model training...
+2025-08-01 01:20:46,447 [INFO] Applying SMOTE with k_neighbors=1
+2025-08-01 01:20:46,492 [INFO] Performing full training with GridSearchCV...
+2025-08-01 01:20:50,724 [INFO] GridSearch finished. Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 120}
+2025-08-01 01:20:50,728 [INFO] Model training complete. Model saved to models/xgb_BTC_USDT_fut.joblib
+2025-08-01 01:20:50,728 [INFO] Telegram (disabled) ▶ 📈 모델 재학습 완료
+2025-08-01 01:20:50,738 [INFO] Telegram (disabled) ▶ 🚀 [LIVE] LONG position opened @ 50025.00
+2025-08-01 01:20:50,738 [ERROR] Failed to attach TP/SL orders: 'MockExchange' object has no attribute 'client'
+2025-08-01 01:20:50,738 [INFO] Telegram (disabled) ▶ ⚠️ Failed to attach TP/SL orders: 'MockExchange' object has no attribute 'client'
+2025-08-01 01:21:28,521 [INFO] Starting model training...
+2025-08-01 01:21:28,522 [INFO] Applying SMOTE with k_neighbors=1
+2025-08-01 01:21:28,561 [INFO] Performing full training with GridSearchCV...
+2025-08-01 01:21:32,213 [INFO] GridSearch finished. Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 120}
+2025-08-01 01:21:32,224 [INFO] Model training complete. Model saved to models/xgb_BTC_USDT_fut.joblib
+2025-08-01 01:21:32,224 [INFO] Telegram (disabled) ▶ 📈 모델 재학습 완료
+2025-08-01 01:21:55,060 [INFO] Starting model training...
+2025-08-01 01:21:55,061 [INFO] Applying SMOTE with k_neighbors=1
+2025-08-01 01:21:55,101 [INFO] Performing full training with GridSearchCV...
+2025-08-01 01:21:57,373 [INFO] GridSearch finished. Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 120}
+2025-08-01 01:21:57,376 [INFO] Model training complete. Model saved to models/xgb_BTC_USDT_fut.joblib
+2025-08-01 01:21:57,376 [INFO] Telegram (disabled) ▶ 📈 모델 재학습 완료
+2025-08-01 01:21:57,386 [INFO] Telegram (disabled) ▶ 🚀 [LIVE] LONG position opened @ 50025.00
+2025-08-01 01:21:57,386 [INFO] [LIVE] TP/SL orders attached at TP=52526.25, SL=48524.25
+2025-08-01 01:21:57,386 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:21:57,387 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:21:57,387 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48475.73. PnL=-777.55
+2025-08-01 01:21:57,387 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:21:57,387 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:21:57,387 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 52578.78. PnL=1273.73
+2025-08-01 01:27:16,315 [INFO] Starting model training...
+2025-08-01 01:27:16,316 [INFO] Applying SMOTE with k_neighbors=1
+2025-08-01 01:27:16,383 [INFO] Performing full training with GridSearchCV...
+2025-08-01 01:27:19,912 [INFO] GridSearch finished. Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 120}
+2025-08-01 01:27:19,916 [INFO] Model training complete. Model saved to models/xgb_BTC_USDT_fut.joblib
+2025-08-01 01:27:19,916 [INFO] Telegram (disabled) ▶ 📈 모델 재학습 완료
+2025-08-01 01:27:19,927 [INFO] Telegram (disabled) ▶ 🚀 [LIVE] LONG position opened @ 50025.00
+2025-08-01 01:27:19,927 [INFO] [LIVE] TP/SL orders attached at TP=52526.25, SL=48524.25
+2025-08-01 01:27:19,927 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:27:19,928 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:27:19,928 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48475.73. PnL=-777.55
+2025-08-01 01:27:19,928 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:27:19,928 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:27:19,928 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 52578.78. PnL=1273.73
+2025-08-01 01:36:02,585 [INFO] Starting model training...
+2025-08-01 01:36:02,587 [INFO] Applying SMOTE with k_neighbors=1
+2025-08-01 01:36:02,656 [INFO] Performing full training with GridSearchCV...
+2025-08-01 01:36:06,225 [INFO] GridSearch finished. Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 120}
+2025-08-01 01:36:06,229 [INFO] Model training complete. Model saved to models/xgb_BTC_USDT_fut.joblib
+2025-08-01 01:36:06,229 [INFO] Telegram (disabled) ▶ 📈 모델 재학습 완료
+2025-08-01 01:36:06,240 [INFO] Telegram (disabled) ▶ 🚀 [LIVE] LONG position opened @ 50025.00
+2025-08-01 01:36:06,241 [INFO] [LIVE] TP/SL orders attached at TP=52526.25, SL=48524.25
+2025-08-01 01:36:06,241 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:36:06,241 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:36:06,241 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48475.73. PnL=-777.55
+2025-08-01 01:36:06,241 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:36:06,241 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:36:06,241 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 52578.78. PnL=1273.73
+2025-08-01 01:36:06,281 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:36:06,281 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:36:06,282 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
+2025-08-01 01:36:06,282 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:36:06,282 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:36:06,282 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
+2025-08-01 01:36:06,282 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:36:06,282 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:36:06,282 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
+2025-08-01 01:36:06,282 [INFO] Telegram (disabled) ▶ ⛔ Max consecutive losses reached (3). Pausing trading for 1 hour(s).
+2025-08-01 01:37:08,866 [INFO] Starting model training...
+2025-08-01 01:37:08,868 [INFO] Applying SMOTE with k_neighbors=1
+2025-08-01 01:37:08,921 [INFO] Performing full training with GridSearchCV...
+2025-08-01 01:37:13,126 [INFO] GridSearch finished. Best parameters: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 120}
+2025-08-01 01:37:13,131 [INFO] Model training complete. Model saved to models/xgb_BTC_USDT_fut.joblib
+2025-08-01 01:37:13,131 [INFO] Telegram (disabled) ▶ 📈 모델 재학습 완료
+2025-08-01 01:37:13,142 [INFO] Telegram (disabled) ▶ 🚀 [LIVE] LONG position opened @ 50025.00
+2025-08-01 01:37:13,142 [INFO] [LIVE] TP/SL orders attached at TP=52526.25, SL=48524.25
+2025-08-01 01:37:13,142 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:37:13,142 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:37:13,143 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48475.73. PnL=-777.55
+2025-08-01 01:37:13,143 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:37:13,143 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:37:13,143 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 52578.78. PnL=1273.73
+2025-08-01 01:37:13,186 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:37:13,186 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:37:13,186 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
+2025-08-01 01:37:13,186 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:37:13,186 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:37:13,186 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
+2025-08-01 01:37:13,186 [INFO] Telegram (disabled) ▶ 🚀 [PAPER] LONG position opened @ 50025.00
+2025-08-01 01:37:13,186 [INFO] [PAPER] Simulating TP/SL attachment at TP=52526.25, SL=48524.25
+2025-08-01 01:37:13,186 [INFO] Telegram (disabled) ▶ ✅ [PAPER] LONG position closed @ 48524.25. PnL=-753.29
+2025-08-01 01:37:13,187 [INFO] Telegram (disabled) ▶ ⛔ Max consecutive losses reached (3). Pausing trading for 1 hour(s).

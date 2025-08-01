@@ -7,3 +7,5 @@ scikit-learn
 imbalanced-learn
 python-dotenv
 streamlit
+plotly
+streamlit-autorefresh
